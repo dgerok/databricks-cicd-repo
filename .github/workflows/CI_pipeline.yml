@@ -25,12 +25,13 @@
        run: |
          pip install databricks-cli
 
-     - name: Configure Databricks CLI
-       run: |         
-         mkdir -p ~/.databricks
-         echo "[DEFAULT]" > ~/.databricks/config
-         echo "host = ${{ secrets.DATABRICKS_HOST }}" >> ~/.databricks/config
-         echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databricks/config
-
+     
      - name: Upload sample data to DBFS
-       run: databricks fs cp sample_sales.csv dbfs:/FileStore/sample_sales.csv --overwrite
+       env:
+         DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+       run: |
+         export DATABRICKS_HOST=$DATABRICKS_HOST
+         export DATABRICKS_TOKEN=$DATABRICKS_TOKEN
+         databricks fs cp sample_sales.csv dbfs:/FileStore/sample_sales.csv --overwrite
+
