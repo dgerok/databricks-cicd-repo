@@ -31,9 +31,6 @@
          echo "[DEFAULT]" > ~/.databricks/config
          echo "host = ${{ secrets.DATABRICKS_HOST }}" >> ~/.databricks/config
          echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databricks/config
-         $
-         $
-         EOF
 
      - name: Upload sample data to DBFS
        run: databricks fs cp sample_sales.csv dbfs:/FileStore/sample_sales.csv --overwrite
