@@ -26,8 +26,11 @@
          pip install databricks-cli
 
      - name: Configure Databricks CLI
-       run: |
-         databricks configure --token <<EOF
+       run: |         
+         mkdir -p ~/.databricks
+         echo "[DEFAULT]" > ~/.databricks/config
+         echo "host = ${{ secrets.DATABRICKS_HOST }}" >> ~/.databricks/config
+         echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databricks/config
          $
          $
          EOF
